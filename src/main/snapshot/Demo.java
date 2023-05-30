@@ -1,28 +1,29 @@
 package main.snapshot;
 
 import main.snapshot.boardgame.BoardGame;
-import main.snapshot.snapshot.BoardGameSnapshot;
+import main.snapshot.snapshot.Snapshot;
 
 public class Demo {
 
     public static void main(String[] args) {
         BoardGame game = new BoardGame();
+        Snapshot boardGameSnapshot;
 
-        game.move();
-        game.move();
-        game.move();
-        game.move();
-
-        game.info();
-        BoardGameSnapshot boardGameSnapshot = new BoardGameSnapshot(game);
-
-        game.move();
-        game.move();
-        game.move();
-        game.move();
+        game.roundMoving();
+        game.roundMoving();
+        game.roundMoving();
+        game.roundMoving();
 
         game.info();
-        boardGameSnapshot.restore();
+        boardGameSnapshot = game.save();
+
+        game.roundMoving();
+        game.roundMoving();
+        game.roundMoving();
+        game.roundMoving();
+
+        game.info();
+        game.load(boardGameSnapshot);
         game.info();
     }
 

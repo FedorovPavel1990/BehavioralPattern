@@ -1,43 +1,46 @@
 package main.snapshot.boardgame;
 
+import main.snapshot.snapshot.BoardGameSnapshot;
+import main.snapshot.snapshot.Snapshot;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class BoardGame {
 
-    private int player1 = 0;
-    private int player2 = 0;
-    private int player3 = 0;
-    private int player4 = 0;
+    private Players players = new Players();
 
-    public void move() {
-        player1 += diceRoll();
-        player2 += diceRoll();
-        player3 += diceRoll();
-        player4 += diceRoll();
+    public Players getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Players players) {
+        this.players = players;
+    }
+
+    public void roundMoving() {
+        players.getPlayer1().move(diceRoll());
+        players.getPlayer2().move(diceRoll());
+        players.getPlayer3().move(diceRoll());
+        players.getPlayer4().move(diceRoll());
     }
 
     public void info() {
         System.out.println("--------------------");
         System.out.printf("Игрок 1 на позиции - %d%nИгрок 2 на позиции - %d%nИгрок 3 на позиции - %d%nИгрок 4 на позиции - %d%n",
-                player1, player2, player3, player4);
+                players.getPlayer1().getPosition(),
+                players.getPlayer2().getPosition(),
+                players.getPlayer3().getPosition(),
+                players.getPlayer4().getPosition());
         System.out.println("--------------------");
     }
 
-    public BoardGame save() {
-        BoardGame savedBoardGame = new BoardGame();
-        savedBoardGame.player1 = player1;
-        savedBoardGame.player2 = player2;
-        savedBoardGame.player3 = player3;
-        savedBoardGame.player4 = player4;
-        return savedBoardGame;
+    public Snapshot save() {
+        return new BoardGameSnapshot(this);
     }
 
-    public void load(BoardGame savedBoardGame) {
-        player1 = savedBoardGame.player1;
-        player2 = savedBoardGame.player2;
-        player3 = savedBoardGame.player3;
-        player4 = savedBoardGame.player4;
+    public void load(Snapshot saved) {
+        saved.restore();
     }
 
     private int diceRoll() {

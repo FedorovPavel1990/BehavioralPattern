@@ -2,16 +2,22 @@ package main.state.state;
 
 import main.state.phone.SmartPhone;
 
-public abstract class State {
+public enum State {
 
-    protected final SmartPhone smartPhone;
+    Locked(new LockedState()),
+    Unlocked(new UnlockedState());
 
-    protected State(SmartPhone smartPhone) {
-        this.smartPhone = smartPhone;
+    private final StateInterface state;
+
+    State(StateInterface state) {
+        this.state = state;
     }
 
-    public abstract String onScreenTap();
+    public String onScreenTap(SmartPhone smartPhone) {
+       return state.onScreenTap(smartPhone);
+    }
 
-    public abstract void onLockButton();
-
+    public void onLockButton(SmartPhone smartPhone) {
+        state.onLockButton(smartPhone);
+    }
 }
