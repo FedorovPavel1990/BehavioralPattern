@@ -1,23 +1,18 @@
 package main.state.state;
 
-import main.state.phone.SmartPhone;
-
 public enum State {
 
     Locked(new LockedState()),
     Unlocked(new UnlockedState());
 
-    private final StateInterface state;
+    private final StateInterface stateProcessor;
 
-    State(StateInterface state) {
-        this.state = state;
+    State(StateInterface stateProcessor) {
+        this.stateProcessor = stateProcessor;
     }
 
-    public String onScreenTap(SmartPhone smartPhone) {
-       return state.onScreenTap(smartPhone);
+    public StateInterface getStateProcessor() {
+        return stateProcessor;
     }
 
-    public void onLockButton(SmartPhone smartPhone) {
-        state.onLockButton(smartPhone);
-    }
 }
